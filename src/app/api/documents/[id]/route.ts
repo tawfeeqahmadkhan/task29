@@ -16,11 +16,13 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
   const access = await getDocumentAccess(id, session.user.id);
   if (!access) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
-  const { document, role } = access;
+  const { role } = access;
   const collaborators = await prisma.documentCollaborator.findMany({
     where: { documentId: id },
     include: { user: { select: { name: true, email: true, image: true } } },
   });
+
+  type CollaboratorRow = (typeof collaborators)[number];
 
   const doc = access.document;
   return NextResponse.json({
@@ -34,7 +36,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
       owner: doc.owner,
     },
     role,
-    collaborators: collaborators.map((c) => ({
+    collaborators: collaborators.map((c: CollaboratorRow) => ({
       id: c.id,
       userId: c.userId,
       role: c.role,
