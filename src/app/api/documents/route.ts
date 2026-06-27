@@ -38,14 +38,17 @@ export async function GET() {
     }),
   ]);
 
-  const ownedDocs = owned.map((d) => ({
+  type OwnedRow = (typeof owned)[number];
+  type CollabRow = (typeof collaborated)[number];
+
+  const ownedDocs = owned.map((d: OwnedRow) => ({
     ...d,
     role: "OWNER" as const,
     collaboratorCount: d._count.collaborators,
     _count: undefined,
   }));
 
-  const collabDocs = collaborated.map((c) => ({
+  const collabDocs = collaborated.map((c: CollabRow) => ({
     ...c.document,
     role: c.role,
     collaboratorCount: c.document._count.collaborators,

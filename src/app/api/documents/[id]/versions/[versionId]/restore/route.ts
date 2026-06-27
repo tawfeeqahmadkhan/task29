@@ -3,6 +3,9 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { getDocumentAccess, canEdit } from "@/lib/document-access";
 import * as Y from "yjs";
+import type { PrismaClient } from "@prisma/client";
+
+type Tx = Omit<PrismaClient, "$connect" | "$disconnect" | "$on" | "$transaction" | "$use" | "$extends">;
 
 export async function POST(
   req: NextRequest,
@@ -29,7 +32,7 @@ export async function POST(
     select: { yjsState: true, title: true, textContent: true },
   });
 
-  await prisma.$transaction(async (tx) => {
+  await prisma.$transaction(async (tx: Tx) => {
     // Save current state as a version (pre-restore snapshot)
     if (currentDoc?.yjsState) {
       await tx.documentVersion.create({

@@ -34,9 +34,12 @@ export default async function DashboardPage() {
     }),
   ]);
 
+  type OwnedRow = (typeof owned)[number];
+  type CollabRow = (typeof collaborated)[number];
+
   const documents = [
-    ...owned.map((d) => ({ ...d, role: "OWNER" as const, collaboratorCount: d._count.collaborators, updatedAt: d.updatedAt.toISOString(), createdAt: d.createdAt.toISOString(), _count: undefined })),
-    ...collaborated.map((c) => ({ ...c.document, role: c.role, collaboratorCount: c.document._count.collaborators, updatedAt: c.document.updatedAt.toISOString(), createdAt: c.document.createdAt.toISOString(), _count: undefined })),
+    ...owned.map((d: OwnedRow) => ({ ...d, role: "OWNER" as const, collaboratorCount: d._count.collaborators, updatedAt: d.updatedAt.toISOString(), createdAt: d.createdAt.toISOString(), _count: undefined })),
+    ...collaborated.map((c: CollabRow) => ({ ...c.document, role: c.role, collaboratorCount: c.document._count.collaborators, updatedAt: c.document.updatedAt.toISOString(), createdAt: c.document.createdAt.toISOString(), _count: undefined })),
   ].sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
 
   return (
