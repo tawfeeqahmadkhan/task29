@@ -17,7 +17,7 @@ interface Props {
   onClose: () => void;
 }
 
-const roleColors: Record<Role, string> = {
+const roleColors: Record<string, string> = {
   OWNER: "default",
   EDITOR: "success",
   VIEWER: "secondary",

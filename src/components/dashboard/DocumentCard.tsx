@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { formatRelativeTime } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -13,8 +13,8 @@ interface Props {
   onDelete: (id: string) => void;
 }
 
-const roleIcons = { OWNER: <Crown className="w-3 h-3" />, EDITOR: <Edit3 className="w-3 h-3" />, VIEWER: <Eye className="w-3 h-3" /> };
-const roleVariants = { OWNER: "default" as const, EDITOR: "success" as const, VIEWER: "secondary" as const };
+const roleIcons: Record<string, React.ReactNode> = { OWNER: <Crown className="w-3 h-3" />, EDITOR: <Edit3 className="w-3 h-3" />, VIEWER: <Eye className="w-3 h-3" /> };
+const roleVariants: Record<string, "default" | "success" | "secondary"> = { OWNER: "default", EDITOR: "success", VIEWER: "secondary" };
 
 export default function DocumentCard({ document, onDelete }: Props) {
   const router = useRouter();
