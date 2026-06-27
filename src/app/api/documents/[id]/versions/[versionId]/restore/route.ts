@@ -3,9 +3,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { getDocumentAccess, canEdit } from "@/lib/document-access";
 import * as Y from "yjs";
-import type { PrismaClient } from "@prisma/client";
-
-type Tx = Omit<PrismaClient, "$connect" | "$disconnect" | "$on" | "$transaction" | "$use" | "$extends">;
+type Tx = Parameters<Parameters<typeof prisma.$transaction>[0]>[0];
 
 export async function POST(
   req: NextRequest,
