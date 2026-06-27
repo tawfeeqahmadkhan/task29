@@ -54,7 +54,7 @@ export default function CollaborativeEditor({ documentId, initialTitle, initialY
 
   const editor = useEditor({
     extensions: [
-      StarterKit.configure({ history: false }),
+      StarterKit,
       Collaboration.configure({ document: ydocRef.current }),
       Placeholder.configure({ placeholder: canEdit ? "Start writing your document…" : "This document is read-only." }),
       Link.configure({ openOnClick: false, autolink: true }),

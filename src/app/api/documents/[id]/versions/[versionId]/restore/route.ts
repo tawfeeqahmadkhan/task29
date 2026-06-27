@@ -39,7 +39,7 @@ export async function POST(
           yjsState: currentDoc.yjsState,
           textSnapshot: currentDoc.textContent,
           description: `Automatic snapshot before restoring version`,
-          createdById: session.user.id,
+          createdById: session.user!.id as string,
         },
       });
     }

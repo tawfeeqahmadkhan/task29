@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
     const { text } = await generateText({
       model: groq("llama-3.1-8b-instant"),
       prompt: prompts[mode],
-      maxTokens: 500,
+      maxOutputTokens: 500,
     });
 
     return NextResponse.json({ result: text, mode });

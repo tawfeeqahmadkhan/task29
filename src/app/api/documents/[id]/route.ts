@@ -22,15 +22,16 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     include: { user: { select: { name: true, email: true, image: true } } },
   });
 
+  const doc = access.document;
   return NextResponse.json({
     document: {
-      id: document.id,
-      title: document.title,
-      yjsState: document.yjsState ? Buffer.from(document.yjsState).toString("base64") : null,
-      updatedAt: document.updatedAt,
-      createdAt: document.createdAt,
-      ownerId: document.ownerId,
-      owner: document.owner,
+      id: doc.id,
+      title: doc.title,
+      yjsState: doc.yjsState ? Buffer.from(doc.yjsState).toString("base64") : null,
+      updatedAt: doc.updatedAt,
+      createdAt: doc.createdAt,
+      ownerId: doc.ownerId,
+      owner: doc.owner,
     },
     role,
     collaborators: collaborators.map((c) => ({

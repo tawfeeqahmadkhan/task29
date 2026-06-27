@@ -23,11 +23,12 @@ export default async function DocumentPage({ params }: Props) {
     include: { user: { select: { name: true, email: true, image: true } } },
   });
 
+  const doc = access.document;
   return (
     <CollaborativeEditor
-      documentId={document.id}
-      initialTitle={document.title}
-      initialYjsState={document.yjsState ? Buffer.from(document.yjsState).toString("base64") : null}
+      documentId={doc.id}
+      initialTitle={doc.title}
+      initialYjsState={doc.yjsState ? Buffer.from(doc.yjsState).toString("base64") : null}
       role={role}
       collaborators={collaborators.map((c) => ({
         id: c.id,

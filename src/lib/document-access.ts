@@ -1,10 +1,17 @@
 import { prisma } from "./db";
 import type { Role } from "@prisma/client";
 
+type FetchedDoc = NonNullable<Awaited<ReturnType<typeof fetchDoc>>>;
+
+export interface DocumentAccess {
+  role: Role;
+  document: FetchedDoc;
+}
+
 export async function getDocumentAccess(
   documentId: string,
   userId: string
-): Promise<{ role: Role; document: Awaited<ReturnType<typeof fetchDoc>> } | null> {
+): Promise<DocumentAccess | null> {
   const document = await fetchDoc(documentId);
   if (!document) return null;
 
